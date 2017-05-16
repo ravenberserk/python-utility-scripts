@@ -80,7 +80,7 @@ def get_children_tasks(parentTask:dict) -> list:
 
     return childrenList
 
-def main():
+def redmine_card_creation():
     """ Main method, will be responsible for creating the task cards. """
     
     try:
@@ -113,6 +113,4 @@ def main():
         input('The process completed successfully. :)')
     except Exception as error:
         print("Error {0}".format(error))
-        input('Process not completed. :(')
-        
-main()
+        input('Process not completed. :(')        

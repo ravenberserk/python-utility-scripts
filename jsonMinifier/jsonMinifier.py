@@ -12,7 +12,7 @@ def read_json(jsonPath:str)->dict:
     response = requests.get(jsonPath)
     return response.json() if response.ok else response.raise_for_status()
 
-def main():
+def json_minifier():
     """ Main method, that will be responsible for minifier the json file. """
 
     # Fist, it is needed get the json file from the URL.
@@ -21,5 +21,3 @@ def main():
     # Print the minify json file.
     print(json.dumps(jsonFile,separators=(',',':')))
     print('Process completed successfully :)')
-
-main()
