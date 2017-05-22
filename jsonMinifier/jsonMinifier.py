@@ -1,10 +1,14 @@
-"""
-Author: Javier Grande Pérez
-Description: Utility script that will minify a json file.
-"""
+#!/usr/bin/env python
+"""Utility script that will minify a json file."""
 
 import requests
 import json
+
+__author__ = "Javier Grande Pérez"
+__version__ = "1.0.0"
+__maintainer__ = "Javier Grande Pérez"
+__email__ = "raven.berserk@gmail.com"
+__status__ = "Production"
 
 def read_json(jsonPath:str)->dict:
     """ Auxiliar method, that will read the json file from a URL. """
