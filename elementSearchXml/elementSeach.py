@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+"""Script que permitira buscar un elemento en un listado de ficheros."""
+
+__author__ = "Javier Grande Pérez"
+__version__ = "1.0.0"
+__maintainer__ = "Javier Grande Pérez"
+__email__ = "raven.berserk@gmail.com"
+__status__ = "Production"
+
 import xml.etree.ElementTree as ET
 import glob
 

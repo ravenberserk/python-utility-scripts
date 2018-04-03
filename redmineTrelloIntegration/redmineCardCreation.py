@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 """Script that will create the Tello cards from a Redmine task."""
 
-import requests
-
 __author__ = "Javier Grande Pérez"
 __version__ = "1.0.0"
 __maintainer__ = "Javier Grande Pérez"
 __email__ = "raven.berserk@gmail.com"
 __status__ = "Production"
+
+import requests
+
 
 # API Keys constants for connecting to Trello and Redmine
 REDMINE_API_KEY = 'XXXXXXX'
@@ -24,8 +25,8 @@ class RedmineTask:
     pass
 
 
-def create_dashboard(task_id: str, task_name: str)-> str:
-    """ Create a new dashboard in Trello. """
+def create_dashboard(task_id: str, task_name: str) -> str:
+    """Create a new dashboard in Trello."""
 
     json_datos = {"name": '{0} - {1}'.format(task_id, task_name)}
 
@@ -35,8 +36,8 @@ def create_dashboard(task_id: str, task_name: str)-> str:
     return resp.json()['id'] if resp.ok else resp.raise_for_status()
 
 
-def get_default_list_dashboard(dashboard_id: str)-> str:
-    """ Get de first list of the dashboard. """
+def get_default_list_dashboard(dashboard_id: str) -> str:
+    """Get de first list of the dashboard."""
 
     resp = requests.get(URL_TRELLO.format('boards/{0}/lists'
                                           .format(dashboard_id),
@@ -46,7 +47,7 @@ def get_default_list_dashboard(dashboard_id: str)-> str:
 
 
 def create_new_trello_card(task: RedmineTask, dash_list_id: str):
-    """ Create a new card with task information. """
+    """Create a new card with task information."""
 
     card_name = 'HU#{0} - {1}'.format(task.id, task.name)
     card_description = 'HU#{0}: {1}/{0}'.format(task.id, URL_REMINE)
@@ -61,8 +62,8 @@ def create_new_trello_card(task: RedmineTask, dash_list_id: str):
                   json=json_datos)
 
 
-def get_redmine_task_info(task_id: str)-> dict:
-    """ Get the Redmine Task information. """
+def get_redmine_task_info(task_id: str) -> dict:
+    """Get the Redmine Task information."""
 
     url_get_children = URL_API_REMINE + '&include=children'
     resp = requests.get(url_get_children.format(task_id, REDMINE_API_KEY))
@@ -70,13 +71,13 @@ def get_redmine_task_info(task_id: str)-> dict:
     return resp.json()['issue'] if resp.ok else resp.raise_for_status()
 
 
-def check_task_is_open(task: dict)-> bool:
-    """ Check if the Redmine task is Open. """
+def check_task_is_open(task: dict) -> bool:
+    """Check if the Redmine task is Open."""
     return 'closed_on' not in task or not task['closed_on']
 
 
-def parse_task(redmine_task: dict)-> RedmineTask:
-    """ Create a new RedmineTask from a json. """
+def parse_task(redmine_task: dict) -> RedmineTask:
+    """Create a new RedmineTask from a json."""
 
     task = RedmineTask()
     task.id = redmine_task['id']
@@ -85,8 +86,8 @@ def parse_task(redmine_task: dict)-> RedmineTask:
     return task
 
 
-def get_children_tasks(parent_task: dict)-> list:
-    """ Get the information from the children task of the task. """
+def get_children_tasks(parent_task: dict) -> list:
+    """Get the information from the children task of the task."""
 
     children_list = []
 
@@ -106,7 +107,7 @@ def get_children_tasks(parent_task: dict)-> list:
 
 
 def main():
-    """ Main method, will be responsible for creating the task cards. """
+    """Main method, will be responsible for creating the task cards."""
 
     try:
         task_id = input('Indicate the task you want to migrate: ')

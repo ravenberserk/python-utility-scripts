@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-""" Utility script that will  create a copy schema in MySQL DB. """
-
-import subprocess
-import os
+"""Utility script that will  create a copy schema in MySQL DB."""
 
 __author__ = "Javier Grande Pérez"
 __version__ = "1.0.0"
@@ -10,9 +7,12 @@ __maintainer__ = "Javier Grande Pérez"
 __email__ = "raven.berserk@gmail.com"
 __status__ = "Development"
 
+import subprocess
+import os
+
 
 class DbConfig():
-    """ Default conection class. """
+    """Default conection class."""
 
     def __init__(self):
         self.db_host = ''
@@ -36,7 +36,7 @@ class DbConfig():
 
 
 class LocalDB(DbConfig):
-    """ Connection params to local DB. """
+    """Connection params to local DB."""
 
     def __init__(self):
         self.db_host = 'localhost'
@@ -47,7 +47,7 @@ class LocalDB(DbConfig):
 
 
 class MirrorDB(LocalDB):
-    """ Connection params to mirror-local DB. """
+    """Connection params to mirror-local DB."""
 
     def __init__(self):
         LocalDB.__init__(self)
@@ -55,7 +55,7 @@ class MirrorDB(LocalDB):
 
 
 class CustomDB(DbConfig):
-    """ Connection params to custom DB. """
+    """Connection params to custom DB."""
 
     def __init__(self):
         self.db_host = input('Indicate the host [localhost]: ') or 'localhost'
@@ -66,7 +66,7 @@ class CustomDB(DbConfig):
 
 
 def _check_db_connection(db_info: DbConfig):
-    """ Check the conection to the DB. """
+    """Check the conection to the DB."""
 
     proc = subprocess.run(
         'mysql -u{0} -p{1} -h{2} -P{3} {4} -s --execute="SELECT 1 FROM DUAL"'
@@ -77,7 +77,7 @@ def _check_db_connection(db_info: DbConfig):
 
 
 def _get_bd(def_opt: str) -> DbConfig:
-    """ Auxiliar method, that will select the orig DB. """
+    """Auxiliar method, that will select the orig DB."""
 
     while(True):
         print("1 - Mirror")
@@ -109,7 +109,7 @@ def _get_bd(def_opt: str) -> DbConfig:
 
 
 def _generate_dump(db_info: DbConfig):
-    """ Auxiliar method, that generate the dump file from orig DB. """
+    """Auxiliar method, that generate the dump file from orig DB."""
     print("-----------------------------------------")
     print("--------- Generating the Dump -----------")
     print("-----------------------------------------")
@@ -122,7 +122,7 @@ def _generate_dump(db_info: DbConfig):
 
 
 def _create_copy(db_info: DbConfig):
-    """Auxiliar method, that will copy the dump in the new DB. """
+    """Auxiliar method, that will copy the dump in the new DB."""
     print("-----------------------------------------")
     print("---------- Creating the copy ------------")
     print("-----------------------------------------")
@@ -166,7 +166,7 @@ def _get_dest_db(source_db: DbConfig) -> DbConfig:
 
 
 def main():
-    """ Main method, that will be responsible for create the new Schema. """
+    """Main method, that will be responsible for create the new Schema."""
     print("-----------------------------------------")
     print("------- Starting the Copy Process -------")
     print("-----------------------------------------")
