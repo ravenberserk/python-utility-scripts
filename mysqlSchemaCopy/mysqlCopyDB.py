@@ -28,7 +28,7 @@ class DbConfig():
     def __eq__(self, other):
         return self.db_host == other.db_host and self.db_name == other.db_name
 
-    def _generate_connection(self):
+    def _connection_str(self):
         return 'mysql -u{0} -p{1} -h{2} -P{3}'.format(self.db_user,
                                                       self.db_pass,
                                                       self.db_host,
@@ -128,16 +128,18 @@ def _create_copy(db_info: DbConfig):
     print("-----------------------------------------")
     print('')
 
-    delete_db = db_info._generate_connection()
-    + ' --execute="DROP DATABASE IF EXISTS {0}"'.format(db_info.db_name)
+    delete_db = (db_info._connection_str()
+                 + ' --execute="DROP DATABASE IF EXISTS {0}"'
+                 .format(db_info.db_name))
     subprocess.run(delete_db, shell=True)
 
-    create_db = db_info._generate_connection()
-    + ' --execute="CREATE DATABASE {0}"'.format(db_info.db_name)
+    create_db = (db_info._connection_str()
+                 + ' --execute="CREATE DATABASE {0}"'
+                 .format(db_info.db_name))
     subprocess.run(create_db, shell=True)
 
-    restore_dump = db_info._generate_connection()
-    + ' {0} < ./01.dump.sql'.format(db_info.db_name)
+    restore_dump = (db_info._connection_str()
+                    + ' {0} < ./01.dump.sql'.format(db_info.db_name))
     subprocess.run(restore_dump, shell=True)
 
 
